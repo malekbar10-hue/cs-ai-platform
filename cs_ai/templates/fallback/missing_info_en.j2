@@ -1,0 +1,8 @@
+Dear {{ customer_name | default("") }},
+
+Thank you for reaching out. To process your request as quickly as possible, could you please provide the following information: {{ missing_fields | join(", ") }}?
+
+Once we receive these details, our team will handle your case within {{ sla_hours }} hours.
+
+Best regards,
+{{ agent_signature }}

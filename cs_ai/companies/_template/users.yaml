@@ -1,0 +1,24 @@
+# users.yaml — Authentication configuration for CS AI
+# Generated / updated by:  python setup.py --company <name>
+# Do NOT edit passwords manually — always use setup.py to set them.
+credentials:
+  usernames:
+    agent1:
+      email: agent1@yourcompany.com
+      name: Agent One
+      password: ""        # filled with bcrypt hash by setup.py
+      role: agent
+    supervisor1:
+      email: supervisor@yourcompany.com
+      name: Supervisor
+      password: ""
+      role: supervisor
+    admin:
+      email: admin@yourcompany.com
+      name: Admin
+      password: ""
+      role: admin
+cookie:
+  expiry_days: 1
+  key: ""               # filled with random secret by setup.py
+  name: cs_ai_session

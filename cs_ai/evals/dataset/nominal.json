@@ -1,0 +1,82 @@
+[
+  {
+    "id": "nom-001",
+    "description": "Polite order status inquiry — order shipped",
+    "input": {
+      "user_input": "Good morning, I would like to check the status of my order 1002.",
+      "customer_email": "alice@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-nom-001"
+    },
+    "expected": {
+      "route": "standard",
+      "intent": "document_request",
+      "no_hallucination": true
+    }
+  },
+  {
+    "id": "nom-002",
+    "description": "Simple invoice request — normal tone",
+    "input": {
+      "user_input": "Hello, could you please send me the invoice for order 1007?",
+      "customer_email": "bob@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-nom-002"
+    },
+    "expected": {
+      "route": "standard",
+      "intent": "document_request",
+      "no_hallucination": true
+    }
+  },
+  {
+    "id": "nom-003",
+    "description": "Delivery date inquiry for a delayed order",
+    "input": {
+      "user_input": "I need to know the estimated delivery date for my order 1008.",
+      "customer_email": "carol@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-nom-003"
+    },
+    "expected": {
+      "route": "standard",
+      "intent": "document_request",
+      "no_hallucination": true
+    }
+  },
+  {
+    "id": "nom-004",
+    "description": "Account information request — neutral",
+    "input": {
+      "user_input": "Good afternoon, I am looking for information about my account balance.",
+      "customer_email": "david@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-nom-004"
+    },
+    "expected": {
+      "route": "standard",
+      "intent": "document_request",
+      "no_hallucination": true
+    }
+  },
+  {
+    "id": "nom-005",
+    "description": "Processing order — polite status check",
+    "input": {
+      "user_input": "Hi, I placed order 1010 last week and wanted to confirm it is being processed.",
+      "customer_email": "eve@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-nom-005"
+    },
+    "expected": {
+      "route": "standard",
+      "intent": "document_request",
+      "no_hallucination": true
+    }
+  }
+]

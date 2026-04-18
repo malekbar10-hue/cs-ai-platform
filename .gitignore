@@ -1,0 +1,40 @@
+# Secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Local data & runtime artefacts
+logs.json
+customer_profiles.json
+cs_tickets.db
+chroma_db/
+**/chroma_db/
+cs_ai/data/
+*.db
+*.sqlite
+
+# Binary / office docs (not source code)
+*.docx
+*.xlsx
+*.pdf
+
+# Eval results (generated at runtime)
+cs_ai/evals/results/
+
+# Claude Code local settings (may contain machine-specific paths)
+.claude/settings.local.json
+
+# Editor / OS noise
+.vscode/
+*.swp
+Thumbs.db
+desktop.ini
+*.txt

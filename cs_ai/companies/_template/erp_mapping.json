@@ -1,0 +1,55 @@
+{
+  "_comment": "ERP field mapping template. Fill in the values that match your ERP API.",
+
+  "endpoints": {
+    "get_order":    "GET /orders/{order_id}",
+    "list_orders":  "GET /orders?fields=id&limit=500",
+    "update_order": "PATCH /orders/{order_id}"
+  },
+
+  "response": {
+    "list_key": "orders",
+    "id_field":  "id"
+  },
+
+  "field_map": {
+    "status":        "status",
+    "delivery_date": "expected_delivery",
+    "stock":         "stock_qty",
+    "customer":      "customer_name",
+    "priority":      "priority",
+    "reason":        "hold_reason"
+  },
+
+  "status_map": {
+    "PROCESSING": "Processing",
+    "BLOCKED":    "Blocked",
+    "SHIPPED":    "Shipped",
+    "DELAYED":    "Delayed",
+    "CANCELLED":  "Cancelled"
+  },
+
+  "reverse_status_map": {
+    "Processing": "PROCESSING",
+    "Blocked":    "BLOCKED",
+    "Shipped":    "SHIPPED",
+    "Delayed":    "DELAYED",
+    "Cancelled":  "CANCELLED"
+  },
+
+  "action_labels": {
+    "UNBLOCK_ORDER":        "Release order",
+    "ESCALATE_PRIORITY":    "Escalate to urgent",
+    "CANCEL_ORDER":         "Cancel order",
+    "FLAG_CREDIT_NOTE":     "Request credit note",
+    "UPDATE_DELIVERY_DATE": "Update delivery date",
+    "REQUEST_DOCUMENT":     "Send document",
+    "CREATE_NCMR":          "Open non-conformance request"
+  },
+
+  "risk_labels": {
+    "Low":    "Low risk — auto-approvable",
+    "Medium": "Review recommended",
+    "High":   "Supervisor approval required"
+  }
+}

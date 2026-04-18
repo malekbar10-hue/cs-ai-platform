@@ -1,0 +1,119 @@
+{
+  "_comment": "Template config — copy this folder, rename it to your company, fill in all values.",
+
+  "company": {
+    "name":               "YourCompany",
+    "industry":           "B2B",
+    "agent_role":         "senior B2B customer service agent",
+    "agent_signature":    "Customer Service Team",
+    "supported_languages":["French", "English"],
+    "example_clients":    "major B2B accounts"
+  },
+
+  "erp": {
+    "_comment": "type: json_mock | mock_erp | erp_api",
+    "type":        "json_mock",
+    "orders_file": "orders_mock.json",
+    "mapping_file":"erp_mapping.json",
+    "endpoint":    null,
+    "auth": {
+      "_comment": "bearer | basic | api_key | oauth2_client_credentials",
+      "type": "bearer",
+      "token_env_var": "ERP_TOKEN"
+    }
+  },
+
+  "crm": {
+    "_comment": "type: json_mock | crm_api",
+    "type":          "json_mock",
+    "profiles_file": "customer_profiles.json",
+    "logs_file":     "logs.json",
+    "endpoint":      null,
+    "auth": {}
+  },
+
+  "knowledge_base": {
+    "file": "knowledge_base.json"
+  },
+
+  "ai": {
+    "model": "gpt-4.1-mini",
+    "api":   "openai",
+    "models": {
+      "simple":   { "model": "gpt-4.1-mini", "max_tokens": 500,  "temperature": 0.3 },
+      "standard": { "model": "gpt-4.1-mini", "max_tokens": 1000, "temperature": 0.5 },
+      "complex":  { "model": "gpt-4.1",      "max_tokens": 1500, "temperature": 0.7 }
+    },
+    "routing": {
+      "simple_intents":      ["tracking", "info", "document_request"],
+      "complex_emotions":    ["Angry", "Urgent"],
+      "complex_intensities": ["Very High", "High"],
+      "complex_intents":     ["escalate", "complaint", "cancel"]
+    }
+  },
+
+  "sla": {
+    "Normal":   { "response_hours": 24, "resolution_days": 5 },
+    "High":     { "response_hours": 4,  "resolution_days": 2 },
+    "Critical": { "response_hours": 1,  "resolution_days": 1 },
+    "auto_close_days": 7
+  },
+
+  "draft_checklist": {
+    "_comment": "AI guard — each item is checked by a second AI pass. Add, remove, or reword items per company needs.",
+    "enabled": true,
+    "items": [
+      {
+        "label": "Acknowledgment",
+        "description": "The reply acknowledges the customer's concern or situation explicitly before providing a solution."
+      },
+      {
+        "label": "Clear resolution or next step",
+        "description": "The reply provides a concrete resolution, action taken, or a clear next step with a realistic timeline."
+      },
+      {
+        "label": "Empathy",
+        "description": "The reply expresses empathy or understanding appropriate to the customer's emotional state."
+      },
+      {
+        "label": "Contact offer",
+        "description": "The reply offers further assistance or provides a way for the customer to follow up if needed."
+      }
+    ]
+  },
+
+  "confidence": {
+    "auto_send_threshold":    0.85,
+    "human_review_threshold": 0.50,
+    "auto_send_enabled":      false
+  },
+
+  "fallback": {
+    "_comment": "Deterministic Jinja2 fallback drafts for blocked/low-confidence decisions.",
+    "auto_send":        false,
+    "default_language": "fr"
+  },
+
+  "communication": {
+    "inbound": {
+      "type":         "email",
+      "host":         "imap.yourcompany.com",
+      "port":         993,
+      "username":     "cs@yourcompany.com",
+      "password_env": "EMAIL_PASSWORD",
+      "mailbox":      "INBOX",
+      "use_ssl":      true
+    },
+    "outbound": {
+      "type":         "email",
+      "host":         "smtp.yourcompany.com",
+      "port":         587,
+      "username":     "cs@yourcompany.com",
+      "password_env": "EMAIL_PASSWORD",
+      "from_address": "cs@yourcompany.com",
+      "from_name":    "Customer Service Team",
+      "use_tls":      true
+    },
+    "polling_interval_seconds": 60
+  }
+}

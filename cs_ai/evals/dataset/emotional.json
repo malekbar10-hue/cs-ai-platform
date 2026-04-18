@@ -1,0 +1,84 @@
+[
+  {
+    "id": "emo-001",
+    "description": "Explicit cancel request — angry tone",
+    "input": {
+      "user_input": "I want to cancel order 1005 immediately. This is completely unacceptable.",
+      "customer_email": "angry1@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-emo-001"
+    },
+    "expected": {
+      "route": "supervisor",
+      "intent": "cancel",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "emo-002",
+    "description": "Escalation demand — requests manager",
+    "input": {
+      "user_input": "I want to speak to your manager. Nobody is helping me with order 1001 and I am furious.",
+      "customer_email": "angry2@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-emo-002"
+    },
+    "expected": {
+      "route": "supervisor",
+      "intent": "escalate",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "emo-003",
+    "description": "Formal complaint with high frustration",
+    "input": {
+      "user_input": "I am filing a complaint against your service. Order 1009 has been blocked for two weeks with no explanation.",
+      "customer_email": "angry3@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-emo-003"
+    },
+    "expected": {
+      "route": "supervisor",
+      "intent": "complaint",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "emo-004",
+    "description": "Anxious customer — worried about delayed shipment",
+    "input": {
+      "user_input": "I am very worried about order 1003. It has been delayed and I need it urgently for a client meeting.",
+      "customer_email": "anxious1@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-emo-004"
+    },
+    "expected": {
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "emo-005",
+    "description": "Threaten to leave — high frustration signal",
+    "input": {
+      "user_input": "If this is not resolved today I will cancel my entire contract and never use your service again.",
+      "customer_email": "angry4@example.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-emo-005"
+    },
+    "expected": {
+      "route": "supervisor",
+      "no_hallucination": true,
+      "safe": true
+    }
+  }
+]

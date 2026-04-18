@@ -1,0 +1,68 @@
+{
+  "entries": [
+    {
+      "id": "kb_001",
+      "title": "Politique de remboursement et avoir",
+      "intents": ["refund"],
+      "topics": ["payment"],
+      "keywords": ["remboursement", "avoir", "refund", "credit note", "trop payé", "overpaid"],
+      "content": "Les demandes d'avoir sont traitées sous 5 à 7 jours ouvrés après validation par le service financier. Un avoir est émis automatiquement pour toute commande annulée avant expédition. Pour les retours produits, un bon de retour (RMA) doit être émis au préalable. Le remboursement est effectué sur le même moyen de paiement que la commande originale. Délai maximum : 14 jours ouvrés."
+    },
+    {
+      "id": "kb_002",
+      "title": "Procédure en cas de retard de livraison",
+      "intents": ["tracking", "info"],
+      "topics": ["delivery"],
+      "keywords": ["retard", "livraison", "delay", "delivery", "transporteur", "carrier"],
+      "content": "En cas de retard, contacter immédiatement le transporteur référencé sur la commande. Si le retard dépasse 48h, escalader au coordinateur logistique. Pour les commandes Haute/Critique priorité, une solution de remplacement (stock alternatif ou transporteur express) doit être proposée sous 4h. Toujours communiquer une nouvelle date ferme au client sous 24h maximum."
+    },
+    {
+      "id": "kb_003",
+      "title": "Procédure de déblocage de commande",
+      "intents": ["info", "escalate"],
+      "topics": ["stock", "delivery"],
+      "keywords": ["bloquée", "blocked", "débloquer", "stock", "rupture"],
+      "content": "Une commande bloquée pour rupture de stock peut être débloquée si : (1) du stock alternatif est disponible dans un autre entrepôt, (2) le client accepte un délai supplémentaire, (3) un produit de substitution est validé. Le déblocage manuel nécessite la validation d'un superviseur pour les commandes Critical. Toujours informer le client du motif exact et de la date de résolution prévue."
+    },
+    {
+      "id": "kb_004",
+      "title": "Processus NCMR et demande de dérogation",
+      "intents": ["ncmr"],
+      "topics": ["quality", "admin"],
+      "keywords": ["ncmr", "dérogation", "non-conformité", "lot", "prolongation", "waiver", "shelf life"],
+      "content": "Une demande de dérogation (NCMR) doit être soumise au service Qualité avec : numéro de lot, date d'expiration, quantité concernée, usage prévu et justification technique. Délai de traitement : 3 à 5 jours ouvrés. En cas d'urgence production, une dérogation provisoire 24h peut être accordée par le Responsable Qualité. Toute dérogation accordée est documentée et traçable dans le système qualité."
+    },
+    {
+      "id": "kb_005",
+      "title": "Documents disponibles sur demande",
+      "intents": ["document_request"],
+      "topics": ["admin", "delivery"],
+      "keywords": ["bl", "ar", "facture", "coa", "coc", "fds", "cmr", "document", "certificat"],
+      "content": "Documents disponibles sous 2h ouvrées : Bon de Livraison (BL), Accusé de Réception (AR), Facture, Lettre de Voiture (CMR), Preuve de Livraison (POD). Documents sous 24h : Certificat d'Analyse (CoA), Certificat de Conformité (CoC), Fiche de Sécurité (FDS/SDS). Documents sous 48h : Documents douaniers, Déclaration de conformité réglementaire. Toute demande doit inclure le numéro de commande."
+    },
+    {
+      "id": "kb_006",
+      "title": "Niveaux de priorité et SLA",
+      "intents": ["escalate", "info"],
+      "topics": ["delivery", "stock"],
+      "keywords": ["priorité", "priority", "sla", "délai", "urgence", "critical", "critique"],
+      "content": "Normal : réponse sous 24h, résolution sous 5 jours ouvrés. High : réponse sous 4h, résolution sous 48h, suivi proactif toutes les 24h. Critical : réponse sous 1h, résolution sous 24h, escalade automatique au manager, point de situation toutes les 4h. En cas de production arrêtée chez le client, activation immédiate du plan de continuité de l'entreprise."
+    },
+    {
+      "id": "kb_007",
+      "title": "Procédure d'annulation de commande",
+      "intents": ["cancel"],
+      "topics": ["delivery", "stock"],
+      "keywords": ["annulation", "cancel", "annuler", "arrêter", "stop order"],
+      "content": "Une commande peut être annulée sans frais si elle n'a pas encore été préparée (statut Processing). Si la commande est déjà expédiée (statut Shipped), une procédure de retour doit être initiée. Commandes en statut Blocked : annulation possible immédiatement. Délai de confirmation d'annulation : 2h ouvrées. Un avoir est émis automatiquement si la commande a été payée."
+    },
+    {
+      "id": "kb_008",
+      "title": "Procédure de réclamation formelle",
+      "intents": ["complaint"],
+      "topics": ["delivery", "quality", "payment"],
+      "keywords": ["réclamation", "plainte", "complaint", "formal", "escalade"],
+      "content": "Toute réclamation formelle est enregistrée sous 1h dans le système CRM avec un numéro de dossier unique communiqué au client. Un responsable de compte prend contact sous 4h. Délai de résolution garanti : 5 jours ouvrés avec rapport de clôture. Pour les clients Critical, un comité de résolution est convoqué sous 24h. Le client reçoit une mise à jour quotidienne jusqu'à clôture."
+    }
+  ]
+}

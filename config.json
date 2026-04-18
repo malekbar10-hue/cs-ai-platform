@@ -1,0 +1,73 @@
+{
+  "company": {
+    "name": "YourCompany",
+    "industry": "B2B",
+    "agent_role": "senior B2B customer service agent",
+    "agent_signature": "Customer Service Team",
+    "supported_languages": ["French", "English"],
+    "example_clients": "major B2B accounts"
+  },
+  "erp": {
+    "type": "json_mock",
+    "orders_file": "orders.json",
+    "endpoint": null,
+    "auth": {}
+  },
+  "crm": {
+    "type": "json_mock",
+    "profiles_file": "customer_profiles.json",
+    "logs_file": "logs.json",
+    "endpoint": null,
+    "auth": {}
+  },
+  "knowledge_base": {
+    "file": "knowledge_base.json"
+  },
+  "ai": {
+    "model": "gpt-4.1-mini",
+    "api": "openai",
+    "models": {
+      "simple":   { "model": "gpt-4.1-mini", "max_tokens": 500,  "temperature": 0.3 },
+      "standard": { "model": "gpt-4.1-mini", "max_tokens": 1000, "temperature": 0.5 },
+      "complex":  { "model": "gpt-4.1",      "max_tokens": 1500, "temperature": 0.7 }
+    },
+    "routing": {
+      "simple_intents":      ["tracking", "info", "document_request"],
+      "complex_emotions":    ["Angry", "Urgent"],
+      "complex_intensities": ["Very High", "High"],
+      "complex_intents":     ["escalate", "complaint", "cancel"]
+    }
+  },
+  "sla": {
+    "Normal":   { "response_hours": 24, "resolution_days": 5 },
+    "High":     { "response_hours": 4,  "resolution_days": 2 },
+    "Critical": { "response_hours": 1,  "resolution_days": 1 }
+  },
+  "confidence": {
+    "auto_send_threshold":    0.85,
+    "human_review_threshold": 0.50,
+    "auto_send_enabled":      false
+  },
+  "communication": {
+    "inbound": {
+      "type":         "email",
+      "host":         "imap.yourcompany.com",
+      "port":         993,
+      "username":     "cs@yourcompany.com",
+      "password_env": "EMAIL_PASSWORD",
+      "mailbox":      "INBOX",
+      "use_ssl":      true
+    },
+    "outbound": {
+      "type":         "email",
+      "host":         "smtp.yourcompany.com",
+      "port":         587,
+      "username":     "cs@yourcompany.com",
+      "password_env": "EMAIL_PASSWORD",
+      "from_address": "cs@yourcompany.com",
+      "from_name":    "Customer Service Team",
+      "use_tls":      true
+    },
+    "polling_interval_seconds": 60
+  }
+}

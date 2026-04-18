@@ -1,0 +1,82 @@
+{
+  "1001": {
+    "status": "Blocked",
+    "delivery_date": null,
+    "reason": "No stock available",
+    "stock": 0,
+    "customer": "L'Oréal",
+    "priority": "High"
+  },
+  "1002": {
+    "status": "Shipped",
+    "delivery_date": "April 5",
+    "reason": null,
+    "stock": 50,
+    "customer": "Nestlé",
+    "priority": "Normal"
+  },
+  "1003": {
+    "status": "Delayed",
+    "delivery_date": "April 12",
+    "reason": "Transport issue",
+    "stock": 20,
+    "customer": "Danone",
+    "priority": "High"
+  },
+  "1004": {
+    "status": "Processing",
+    "delivery_date": "April 9",
+    "reason": null,
+    "stock": 15,
+    "customer": "Unilever",
+    "priority": "Normal"
+  },
+  "1005": {
+    "status": "Blocked",
+    "delivery_date": null,
+    "reason": "Payment issue",
+    "stock": 30,
+    "customer": "Airbus",
+    "priority": "Critical"
+  },
+  "1006": {
+    "status": "Cancelled",
+    "delivery_date": null,
+    "reason": "Customer request",
+    "stock": 0,
+    "customer": "TotalEnergies",
+    "priority": "Low"
+  },
+  "1007": {
+    "status": "Shipped",
+    "delivery_date": "April 3",
+    "reason": null,
+    "stock": 100,
+    "customer": "Carrefour",
+    "priority": "Normal"
+  },
+  "1008": {
+    "status": "Delayed",
+    "delivery_date": "April 15",
+    "reason": "Production delay",
+    "stock": 5,
+    "customer": "Renault",
+    "priority": "High"
+  },
+  "1009": {
+    "status": "Blocked",
+    "delivery_date": null,
+    "reason": "Compliance issue",
+    "stock": 10,
+    "customer": "Sanofi",
+    "priority": "Critical"
+  },
+  "1010": {
+    "status": "Processing",
+    "delivery_date": "April 8",
+    "reason": null,
+    "stock": 25,
+    "customer": "Orange",
+    "priority": "Normal"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_comment": "Standalone communication config. Values here are merged into config.json → communication if present.",
+
+  "inbound": {
+    "type":         "email",
+    "host":         "imap.yourcompany.com",
+    "port":         993,
+    "username":     "cs@yourcompany.com",
+    "password_env": "EMAIL_PASSWORD",
+    "mailbox":      "INBOX",
+    "use_ssl":      true
+  },
+
+  "outbound": {
+    "type":         "email",
+    "host":         "smtp.yourcompany.com",
+    "port":         587,
+    "username":     "cs@yourcompany.com",
+    "password_env": "EMAIL_PASSWORD",
+    "from_address": "cs@yourcompany.com",
+    "from_name":    "Customer Service Team",
+    "use_tls":      true
+  },
+
+  "polling_interval_seconds": 60
+}

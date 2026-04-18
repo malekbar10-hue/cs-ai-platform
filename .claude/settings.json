@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(python -m pytest tests/unit/ -v --no-header -q)",
+      "Bash(python -m pytest tests/unit/ -q --cov=cs_ai/engine --cov-report=term-missing)",
+      "Bash(find /c/Users/HP/Desktop/AI -name \"*.py\" -exec grep -l \"def run_pipeline\\\\|run_pipeline =\" {} \\\\;)",
+      "Bash(python -m pytest tests/unit/ -q --tb=short)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git rm *)"
+    ]
+  }
+}

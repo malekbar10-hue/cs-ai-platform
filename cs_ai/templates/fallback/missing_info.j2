@@ -1,0 +1,8 @@
+Bonjour {{ customer_name | default("") }},
+
+Merci pour votre message. Afin de traiter votre demande dans les meilleurs délais, pourriez-vous nous communiquer les informations suivantes : {{ missing_fields | join(", ") }} ?
+
+Dès réception de ces éléments, notre équipe prendra en charge votre dossier sous {{ sla_hours }} heures.
+
+Cordialement,
+{{ agent_signature }}

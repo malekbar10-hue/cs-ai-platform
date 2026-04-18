@@ -1,0 +1,36 @@
+{
+  "_comment": "Escalation rules for this company. Rules are evaluated top-to-bottom; first match wins.",
+
+  "rules": [
+    {
+      "id":        "angry_very_high",
+      "condition": {"emotion": "Angry", "intensity": ["Very High", "High"]},
+      "action":    "escalate",
+      "tier":      "supervisor",
+      "reason":    "Angry customer with high intensity — immediate supervisor review"
+    },
+    {
+      "id":        "escalate_intent",
+      "condition": {"intent": "escalate"},
+      "action":    "escalate",
+      "tier":      "supervisor",
+      "reason":    "Customer explicitly requested escalation"
+    },
+    {
+      "id":        "cancel_intent",
+      "condition": {"intent": "cancel"},
+      "action":    "escalate",
+      "tier":      "team_lead",
+      "reason":    "Cancellation request — team lead approval required"
+    },
+    {
+      "id":        "low_confidence",
+      "condition": {"confidence_below": 0.50},
+      "action":    "escalate",
+      "tier":      "human_review",
+      "reason":    "AI confidence too low for autonomous handling"
+    }
+  ],
+
+  "default_action": "none"
+}
