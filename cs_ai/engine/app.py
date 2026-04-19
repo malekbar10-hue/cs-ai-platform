@@ -87,6 +87,7 @@ defaults = {
     "current_action":        None,
     "erp_log":               [],
     "current_trajectory":    None,
+    "pipeline_errors":       [],
 }
 for key, val in defaults.items():
     if key not in st.session_state:
@@ -217,7 +218,9 @@ def analyze_and_generate(user_input):
     except Exception as _exc:
         # Pipeline failed — use legacy function as safety net
         import traceback
-        traceback.print_exc()
+        _tb = traceback.format_exc()
+        print(f"[Orchestrator] Pipeline failed: {_exc}\n{_tb}")
+        st.session_state.setdefault("pipeline_errors", []).append(str(_exc))
         return _analyze_and_generate_legacy(user_input)
 
 
@@ -317,6 +320,18 @@ def _analyze_and_generate_legacy(user_input):
     )
     draft = response.choices[0].message.content
 
+    # Compute route (same logic as triage agent)
+    def _legacy_route(emo, intens, intt):
+        if emo in ("Angry", "Urgent") and intens in ("Very High", "High"):
+            return "supervisor"
+        if intt in ("escalate", "cancel"):
+            return "supervisor"
+        if intens in ("High", "Very High"):
+            return "priority"
+        if intt in ("tracking", "info", "document_request") and emo in ("Neutral", "Satisfied"):
+            return "auto"
+        return "standard"
+
     return {
         "language":         language,
         "lang_confidence":  lang_confidence,
@@ -326,6 +341,7 @@ def _analyze_and_generate_legacy(user_input):
         "secondary":        secondary,
         "intent":           intent,
         "topic":            topic,
+        "route":            _legacy_route(emotion, intensity, intent),
         "draft":      draft,
         "action":     action,
         "emo_conf":   emo_conf,
@@ -403,6 +419,7 @@ with col_left:
 # ── RIGHT: analysis panel ──────────────────────────────────────────────────
 with col_right:
     st.subheader("Analysis")
+    st.caption("v3")
 
     emotion_icons = {
         "Angry":      "🔴",
@@ -412,6 +429,12 @@ with col_right:
         "Satisfied":  "🟢",
         "Neutral":    "⚪",
     }
+
+    if st.session_state.get("pipeline_errors"):
+        st.error(f"⚠ Pipeline fallback: {st.session_state.pipeline_errors[-1]}")
+
+    if st.session_state.current_analysis.get("gpt_intent_error"):
+        st.warning(f"⚠ GPT intent failed: {st.session_state.current_analysis['gpt_intent_error']}")
 
     if st.session_state.current_analysis:
         a = st.session_state.current_analysis
@@ -426,6 +449,12 @@ with col_right:
             st.metric("Topic",     a["topic"])
 
         st.metric("Language", a["language"])
+
+        _route_icons = {"supervisor": "🔴", "priority": "🟠", "standard": "🟡", "auto": "🟢"}
+        _route_val   = str(a.get("route") or "")
+        _route_icon  = _route_icons.get(_route_val, "⚪")
+        st.info(f"{_route_icon} Route: **{_route_val.capitalize() or 'not set'}**")
+
         if a.get("lang_confidence", 1.0) < 0.65:
             st.warning("⚠ Language uncertain — verify the response is in the right language")
 

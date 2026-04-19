@@ -79,23 +79,10 @@
 
   "communication": {
     "inbound": {
-      "type":         "email",
-      "host":         "imap.yourcompany.com",
-      "port":         993,
-      "username":     "cs@yourcompany.com",
-      "password_env": "EMAIL_PASSWORD",
-      "mailbox":      "INBOX",
-      "use_ssl":      true
+      "type": "web"
     },
     "outbound": {
-      "type":         "email",
-      "host":         "smtp.yourcompany.com",
-      "port":         587,
-      "username":     "cs@yourcompany.com",
-      "password_env": "EMAIL_PASSWORD",
-      "from_address": "cs@yourcompany.com",
-      "from_name":    "Customer Service Team",
-      "use_tls":      true
+      "type": "web"
     },
     "polling_interval_seconds": 60
   }

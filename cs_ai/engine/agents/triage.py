@@ -30,7 +30,7 @@ from base import BaseAgent
 from main import (
     detect_language, detect_emotion, detect_intent, detect_topic,
     find_order, get_customer_profile, get_emotion_trajectory,
-    order_database,
+    order_database, client as _openai_client, CONFIG as _CONFIG,
 )
 from nlp import detect_noise
 from escalation import preview_escalation
@@ -38,6 +38,108 @@ from schemas import TriageResult, normalise_intent, normalise_emotion
 from prompt_registry import get_registry
 from memory import ScopedMemory, make_item
 from health_score import HealthScoreComputer
+
+_VALID_INTENTS = {
+    "tracking", "refund", "cancel", "complaint", "escalate", "replace",
+    "info", "payment", "document_request", "ncmr", "modification", "general_inquiry",
+}
+
+
+
+_INTENT_SYSTEM_PROMPT = """\
+You are an intent classifier for B2B customer service messages.
+Return ONLY a JSON object — no explanation, no markdown fences.
+
+Format: {"intent": "<value>", "confidence": <0.0 to 1.0>}
+
+Valid intents:
+- "tracking"         : customer asks where their order is, mentions delay, late delivery, waiting, no update on shipment
+- "refund"           : wants money back, credit note, reimbursement
+- "cancel"           : wants to cancel or stop an order
+- "complaint"        : formal complaint about service, product, or treatment
+- "escalate"         : asks for a manager, supervisor, or higher authority
+- "replace"          : wants a replacement or resend of goods
+- "info"             : asks why something happened, wants an explanation or root cause
+- "payment"          : question about an invoice, billing amount, or payment
+- "document_request" : explicitly asks for a named document — delivery note, POD, certificate, CMR, COA, waybill, etc.
+- "ncmr"             : non-conformance, quality deviation, derogation, out-of-spec material
+- "modification"     : wants to change order details (quantity, address, date)
+- "general_inquiry"  : none of the above
+
+Critical rules:
+- If the customer mentions delay, late, 3 weeks, waiting, where is my order, no news, still not received → "tracking"
+- Use "document_request" ONLY if the customer explicitly names a document type they want sent
+- Pick the intent that requires the most urgent action when ambiguous\
+"""
+
+
+def _gpt_classify_intent(user_input: str) -> tuple[str, float]:
+    """
+    Ask GPT to classify the customer's intent using system/user message split.
+    Returns (intent, confidence). Falls back to local NLP on any error.
+    """
+    try:
+        ai_cfg = _CONFIG.get("ai", {})
+        models = ai_cfg.get("models", {})
+        model  = models.get("simple", {}).get("model") or ai_cfg.get("model", "gpt-4.1-mini")
+
+        response = _openai_client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": _INTENT_SYSTEM_PROMPT},
+                {"role": "user",   "content": user_input},
+            ],
+            temperature=0.0,
+            max_tokens=80,
+        )
+        raw = response.choices[0].message.content.strip()
+        # Strip accidental markdown fences
+        if raw.startswith("```"):
+            parts = raw.split("```")
+            raw = parts[1] if len(parts) > 1 else raw
+            if raw.startswith("json"):
+                raw = raw[4:].strip()
+        data       = json.loads(raw)
+        intent     = data.get("intent", "general_inquiry")
+        confidence = float(data.get("confidence", 0.5))
+        if intent not in _VALID_INTENTS:
+            intent = "general_inquiry"
+        return intent, round(confidence, 3)
+    except Exception as exc:
+        import traceback
+        _tb = traceback.format_exc()
+        print(f"[TriageAgent] GPT intent classification failed: {exc}\n{_tb}")
+        # Store the error so the UI can display it
+        _gpt_classify_intent._last_error = str(exc)
+        return "general_inquiry", 0.0
+
+_gpt_classify_intent._last_error = ""
+
+
+def _smart_intent_fallback(text: str) -> tuple[str, float] | None:
+    """
+    Catches the cases where local NLP reliably gives wrong answers.
+    Returns (intent, confidence) when confident, else None.
+    Called AFTER GPT fails — replaces dumb ChromaDB result for known patterns.
+    """
+    t = text.lower()
+    # Order tracking / delay — local NLP confuses these with document_request
+    if any(s in t for s in [
+        "delayed", "delay", "late", "3 weeks", "two weeks", "several weeks",
+        "not received", "not delivered", "not arrived", "still not",
+        "where is my order", "where is my", "where is it",
+        "been waiting", "no update", "no news", "overdue",
+        "delivery date", "when will", "status of my order",
+    ]):
+        return "tracking", 0.90
+    if any(s in t for s in ["refund", "reimburse", "money back", "credit note",
+                              "remboursement", "avoir"]):
+        return "refund", 0.90
+    if any(s in t for s in ["cancel", "annuler", "annulation"]):
+        return "cancel", 0.90
+    if any(s in t for s in ["manager", "supervisor", "escalate", "responsable"]):
+        return "escalate", 0.90
+    return None
 
 
 class TriageAgent(BaseAgent):
@@ -88,8 +190,20 @@ class TriageAgent(BaseAgent):
             e for e, s in all_scores.items()
             if s >= top_score * 0.30 and e != emotion
         ]
-        intent, int_conf = detect_intent(text)
-        topic,  top_conf = detect_topic(text)
+        # Intent: GPT first, smart fallback second, local NLP last resort
+        intent, int_conf = _gpt_classify_intent(user_input)
+        if intent == "general_inquiry" and int_conf == 0.0:
+            # GPT failed — try smart pattern fallback before local NLP
+            _fb = _smart_intent_fallback(text)
+            if _fb:
+                intent, int_conf = _fb
+                ctx["gpt_intent_error"] = f"GPT failed ({_gpt_classify_intent._last_error}), smart fallback used"
+            else:
+                intent, int_conf = detect_intent(text)
+                ctx["gpt_intent_error"] = _gpt_classify_intent._last_error or "unknown error"
+        else:
+            ctx["gpt_intent_error"] = ""
+        topic, top_conf = detect_topic(text)
 
         # ── Order detection ───────────────────────────────────────────────────
         order_info, priority, order_id = find_order(user_input)

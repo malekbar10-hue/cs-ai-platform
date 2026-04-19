@@ -1,0 +1,11 @@
+cookie:
+  expiry_days: 1
+  key: a3bb991caef6c7683872a9814255b2e4b635e983a6b4ed0d806def907c7b4117
+  name: cs_ai_session
+credentials:
+  usernames:
+    admin:
+      email: admin@cs.ai
+      name: admin123
+      password: $2b$12$rMQW7SvphC5UQrgmRcXVh.Mptn7IW7ggFiiYXzq19EiF/DNC6bEXi
+      role: admin
