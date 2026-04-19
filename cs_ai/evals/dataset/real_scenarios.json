@@ -1,0 +1,154 @@
+[
+  {
+    "id": "real-001",
+    "description": "Tracking — polite inquiry, order placed 2 weeks ago, no news",
+    "input": {
+      "user_input": "Good morning, we placed order ORD-1042 two weeks ago and we have not received any update since the order confirmation. Could you please let us know the current status and expected delivery date? We are starting to plan our production schedule and need visibility on this.",
+      "customer_email": "procurement@clientA.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-001"
+    },
+    "expected": {
+      "intent": "tracking",
+      "route": "standard",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-002",
+    "description": "Tracking — urgent, order 3 weeks late, client frustrated",
+    "input": {
+      "user_input": "This is completely unacceptable. We ordered 3 weeks ago and still nothing has arrived. Our production line is at a standstill because of this delay. I need an immediate answer on where our shipment is, otherwise we will have to escalate this to our management.",
+      "customer_email": "operations@clientB.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-002"
+    },
+    "expected": {
+      "intent": "tracking",
+      "route": "supervisor",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-003",
+    "description": "Tracking — French language, order delayed, asking for update",
+    "input": {
+      "user_input": "Bonjour, nous attendons toujours la livraison de notre commande passée il y a 3 semaines. Nous n'avons reçu aucune information sur l'état de l'expédition. Pourriez-vous nous donner une mise à jour urgente ? Nous en avons besoin pour notre planning.",
+      "customer_email": "logistique@clientC.fr",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-003"
+    },
+    "expected": {
+      "intent": "tracking",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-004",
+    "description": "Return — no storage capacity, client requesting return or postponement",
+    "input": {
+      "user_input": "Dear team, we have a storage capacity issue at our warehouse and are unable to receive the delivery scheduled for next week. We would like to request either a return of the goods or a postponement of the delivery by 3 weeks. Please confirm what is possible on your end.",
+      "customer_email": "warehouse@clientD.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-004"
+    },
+    "expected": {
+      "intent": "modification",
+      "route": "standard",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-005",
+    "description": "Return — damaged goods received, formal return demand",
+    "input": {
+      "user_input": "We received delivery for order ORD-2031 yesterday and unfortunately a significant portion of the goods arrived damaged. Several pallets have visible damage and the products are unusable. We formally request a return and replacement of the affected items. Please advise on the return procedure and timeline.",
+      "customer_email": "quality@clientE.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-005"
+    },
+    "expected": {
+      "intent": "replace",
+      "route": "priority",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-006",
+    "description": "Return — damaged goods, angry tone, threatening to escalate",
+    "input": {
+      "user_input": "This is a formal complaint. The goods from order ORD-2031 arrived completely damaged. This is not the first time this has happened with your company. We are refusing the delivery and demand an immediate refund or replacement. If we do not hear back within 24 hours we will escalate this to our legal department.",
+      "customer_email": "director@clientF.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-006"
+    },
+    "expected": {
+      "intent": "replace",
+      "route": "supervisor",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-007",
+    "description": "Delivery date move — client running out of stock, urgent request",
+    "input": {
+      "user_input": "Good afternoon, we have an urgent request. Our current stock levels are critically low and we are at risk of a stockout within the next 10 days. The delivery for order ORD-3055 is currently scheduled for the 30th. Is it possible to bring this forward to this week or early next week? This is very important for our operations.",
+      "customer_email": "supply@clientG.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-007"
+    },
+    "expected": {
+      "intent": "modification",
+      "route": "priority",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-008",
+    "description": "Delivery date move — French, stockout imminent, please accelerate",
+    "input": {
+      "user_input": "Bonjour, nous avons une situation urgente. Notre stock est presque épuisé et nous risquons une rupture d'ici la fin de la semaine. Serait-il possible d'avancer la livraison de notre commande ORD-3060 prévue le 28 ? Nous avons absolument besoin de ces marchandises au plus tôt.",
+      "customer_email": "approvisionnement@clientH.fr",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-008"
+    },
+    "expected": {
+      "intent": "modification",
+      "route": "priority",
+      "no_hallucination": true,
+      "safe": true
+    }
+  },
+  {
+    "id": "real-009",
+    "description": "Delivery date move — out of stock, threatening to source elsewhere",
+    "input": {
+      "user_input": "We are completely out of stock as of today. Our customers are waiting and we cannot fulfill our own orders. The delivery scheduled for next week is too late. If you cannot deliver by Thursday at the latest, we will have no choice but to source the products from a competitor. Please respond urgently.",
+      "customer_email": "ceo@clientI.com",
+      "company": "default",
+      "ticket": null,
+      "session_id": "eval-real-009"
+    },
+    "expected": {
+      "intent": "modification",
+      "route": "supervisor",
+      "no_hallucination": true,
+      "safe": true
+    }
+  }
+]
