@@ -26,6 +26,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run unit tests
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: pytest tests/unit/ -v --tb=short
 
       - name: Run eval harness (CI gate)
